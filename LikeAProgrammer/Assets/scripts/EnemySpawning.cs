@@ -2,23 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO move to separate class
+public enum EnemyType {
+
+	Battery = 0,
+	Character,
+	Integer,
+	NumberOfTypes
+}
+
 public class EnemySpawning : MonoBehaviour {
-
-	// TODO move to enemy script
-	public class Enemy : MonoBehaviour {
-
-		public EnemyType type;
-		public Rigidbody2D rigidBody;
-	}
-
-	// TODO move to separate class
-	public enum EnemyType {
-
-		Battery = 0,
-		Character,
-		Integer,
-		NumberOfTypes
-	}
 		
 	class ScheduledSpawn {
 
@@ -64,19 +57,24 @@ public class EnemySpawning : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+
 	}
 
 	IEnumerator callStepRoutines() {
 
-		yield return new WaitForSeconds(timeStepDuration);
-		currentTime++;
-		scheduleSpawn ();
-		spawnEnemies ();
+		while (true) {
+
+			yield return new WaitForSeconds(timeStepDuration);
+			currentTime++;
+			scheduleSpawn ();
+			spawnEnemies ();
+		}
 	}
 
 	// Schedules an enemy spawn
 	void scheduleSpawn() {
 
+		print ("scheduleSpawn");
 		int scheduleTime = currentTime + Random.Range (1, maxScheduledInterval);
 		EnemyType type = (EnemyType)(Random.Range (0, (int)EnemyType.NumberOfTypes - 1)); // TODO weighted probabilities
 		while (scheduledArrivalTimes.Contains(arrivalTime(speedMultipliers[type], scheduleTime))) {
@@ -99,13 +97,19 @@ public class EnemySpawning : MonoBehaviour {
 
 	// Spawns all enemies scheduled for current time
 	void spawnEnemies() {
+		ScheduledSpawn spawnToRemove = null;
 		foreach (ScheduledSpawn spawn in scheduledSpawns) {
 
 			if (spawn.spawnTime == currentTime) {
 
 				spawnEnemy (spawn);
-				scheduledSpawns.Remove (spawn);
+				spawnToRemove = spawn;
+				break;
 			}
+		}
+		if (spawnToRemove != null) {
+
+			scheduledSpawns.Remove (spawnToRemove);
 		}
 	}
 
@@ -146,7 +150,8 @@ public class EnemySpawning : MonoBehaviour {
 		Vector2 startPoint = distance * new Vector2 (Mathf.Cos (angle), Mathf.Sin (angle));
 		Vector2 direction = center - startPoint;
 		newEnemy.transform.position = startPoint;
-		newEnemy.rigidBody.velocity = direction * baseVelocity * speedMultipliers [spawn.type];
+		Vector2 vel = direction * baseVelocity * speedMultipliers [spawn.type];
+		newEnemy.setVelocity(vel);
 		// add to scene
 		newEnemy.gameObject.SetActive(true);
 	}
