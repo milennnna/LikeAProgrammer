@@ -6,8 +6,12 @@ public class EnemySpawning : MonoBehaviour {
 
 	public float maxSpeed;
 	public float minSpeed;
+	public float maxSpin;
+	public float timeStepDuration;
+	public GameObject laika;
 
-	private GameObject[] enemyPool;
+	private GameObject[] reusableEnemyPool;
+	private int[] scheduledCollisionTimes;
 
 	enum EnemyType {
 
@@ -26,7 +30,7 @@ public class EnemySpawning : MonoBehaviour {
 		
 	}
 
-	void spawnEnemy() {
+	void spawnEnemy(float speed, float spin, EnemyType type, int spawnTime) {
 
 	}
 }
