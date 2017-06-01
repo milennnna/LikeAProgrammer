@@ -51,8 +51,8 @@ public class EnemySpawning : MonoBehaviour {
 
 	// private fields
 	private List<Enemy> reusableEnemyPool = new List<Enemy>();
-	private List<int> scheduledArrivalTimes;
-	private List<ScheduledSpawn> scheduledSpawns;
+	private List<int> scheduledArrivalTimes = new List<int>();
+	private List<ScheduledSpawn> scheduledSpawns = new List<ScheduledSpawn>();
 	private int currentTime = 0;
 		
 	// Use this for initialization
