@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\scripts\EnemySpawning.cs" />
+     <Compile Include="Assets\scripts\Shield.cs" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>/Users/bobanstanojevic/LikeAProgrammer/LikeAProgrammer/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>
