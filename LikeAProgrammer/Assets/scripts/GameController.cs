@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
 	public bool playing;
-	public float timeLeft;
+	public float timeLeft = 5;
 
 	// Use this for initialization
 	void Start () {
