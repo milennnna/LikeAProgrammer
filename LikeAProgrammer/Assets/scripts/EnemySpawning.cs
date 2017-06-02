@@ -38,7 +38,8 @@ public class EnemySpawning : MonoBehaviour {
 
 	// references
 	public GameObject laikaReference;
-	public Enemy batteryReference;
+	public Enemy fullBatteryReference;
+	public Enemy emptyBatteryReference;
 	public Enemy characterReference;
 	public Enemy integerReference;
 
@@ -75,7 +76,7 @@ public class EnemySpawning : MonoBehaviour {
 	void scheduleSpawn() {
 
 		int scheduleTime = currentTime + Random.Range (1, maxScheduledInterval);
-		EnemyType type = (EnemyType)(Random.Range (0, (int)EnemyType.NumberOfTypes - 1)); // TODO weighted probabilities
+		EnemyType type = (EnemyType)(Random.Range (0, (int)EnemyType.NumberOfTypes)); // TODO weighted probabilities
 		while (scheduledArrivalTimes.Contains(arrivalTime(speedMultipliers[type], scheduleTime))) {
 
 			scheduleTime++;
@@ -129,7 +130,7 @@ public class EnemySpawning : MonoBehaviour {
 
 			switch (spawn.type) {
 			case EnemyType.Battery: 
-				newEnemy = Instantiate<Enemy> (batteryReference);
+				newEnemy = Instantiate<Enemy> (Battery.batteryValue() ? fullBatteryReference : emptyBatteryReference);
 				break;
 			case EnemyType.Character: 
 				newEnemy = Instantiate<Enemy> (characterReference);
