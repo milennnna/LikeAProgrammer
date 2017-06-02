@@ -54,6 +54,7 @@
      <Compile Include="Assets\scripts\Integer.cs" />
      <Compile Include="Assets\scripts\Lajka.cs" />
      <Compile Include="Assets\scripts\Shield.cs" />
+     <Compile Include="Assets\scripts\StartGame.cs" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>/Users/zeljkoilic/LikeAProgrammer/LikeAProgrammer/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>
