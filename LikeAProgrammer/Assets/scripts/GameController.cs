@@ -1,15 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
-	public bool playing;
+	public bool playing = true;
 	public float timeLeft = 5;
+	private int time=5;
+
+	public Text timeLeftText;
 
 	// Use this for initialization
 	void Start () {
-		playing = false;
+		playing = true;
 	}
 	
 	// Update is called once per frame
@@ -23,9 +27,12 @@ public class GameController : MonoBehaviour {
 			if (timeLeft < 0) {
 				timeLeft = 0;
 			}
-			//TODO:
-			//Add reference to text component and display proper timeLeft
-			//UpdateText();
+			UpdateTimer();
 		}
+	}
+
+	private void UpdateTimer() {
+		//time = Mathf.Round (timeLeft, time);
+		timeLeftText.text = Mathf.Round(timeLeft).ToString ();
 	}
 }
