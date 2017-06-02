@@ -24,7 +24,7 @@ public class EnemySpawning : MonoBehaviour {
 	// consts
 	public int distanceStepsAtLowestSpeed = 60; // distance between shield and spawning circle (must be dividable by 6!!!)
 	public float timeStepDuration = 0.5f; // minimal time between two arrivals
-	public float baseVelocity = 10.0f; // slowest enemy velocity
+	public float baseVelocity = 0.001f; // slowest enemy velocity
 	public int maxScheduledInterval = 10; // max steps in future for scheduling
 	public float maxSpin = 50.0f;
 
@@ -33,12 +33,13 @@ public class EnemySpawning : MonoBehaviour {
 
 		{ EnemyType.Battery, 1 },
 		{ EnemyType.Character, 2 },
-		{ EnemyType.Integer, 3 }
+		{ EnemyType.Integer, 2 }
 	};
 
 	// references
 	public GameObject laikaReference;
-	public Enemy batteryReference;
+	public Enemy fullBatteryReference;
+	public Enemy emptyBatteryReference;
 	public Enemy characterReference;
 	public Enemy integerReference;
 
@@ -74,9 +75,8 @@ public class EnemySpawning : MonoBehaviour {
 	// Schedules an enemy spawn
 	void scheduleSpawn() {
 
-		print ("scheduleSpawn");
 		int scheduleTime = currentTime + Random.Range (1, maxScheduledInterval);
-		EnemyType type = (EnemyType)(Random.Range (0, (int)EnemyType.NumberOfTypes - 1)); // TODO weighted probabilities
+		EnemyType type = (EnemyType)(Random.Range (0, (int)EnemyType.NumberOfTypes)); // TODO weighted probabilities
 		while (scheduledArrivalTimes.Contains(arrivalTime(speedMultipliers[type], scheduleTime))) {
 
 			scheduleTime++;
@@ -120,7 +120,7 @@ public class EnemySpawning : MonoBehaviour {
 		Enemy newEnemy = null;
 		foreach (Enemy enemy in reusableEnemyPool) {
 
-			if (!enemy.gameObject.activeInHierarchy && enemy.type == spawn.type) {
+			if (!enemy.spawned && enemy.type == spawn.type) {
 
 				newEnemy = enemy;
 			}
@@ -130,7 +130,7 @@ public class EnemySpawning : MonoBehaviour {
 
 			switch (spawn.type) {
 			case EnemyType.Battery: 
-				newEnemy = Instantiate<Enemy> (batteryReference);
+				newEnemy = Instantiate<Enemy> (Battery.batteryValue() ? fullBatteryReference : emptyBatteryReference);
 				break;
 			case EnemyType.Character: 
 				newEnemy = Instantiate<Enemy> (characterReference);
@@ -147,11 +147,13 @@ public class EnemySpawning : MonoBehaviour {
 		float distance = distanceStepsAtLowestSpeed * timeStepDuration * baseVelocity;
 		Vector2 center = laikaReference.transform.position;
 		float angle = Random.Range (0, 2 * Mathf.PI);
-		Vector2 startPoint = distance * new Vector2 (Mathf.Cos (angle), Mathf.Sin (angle));
+		Vector2 startPoint = center + distance * new Vector2 (Mathf.Cos (angle), Mathf.Sin (angle));
 		Vector2 direction = center - startPoint;
+		direction.Normalize();
 		newEnemy.transform.position = startPoint;
 		Vector2 vel = direction * baseVelocity * speedMultipliers [spawn.type];
 		newEnemy.setVelocity(vel);
+		newEnemy.spawned = true;
 		// add to scene
 		newEnemy.gameObject.SetActive(true);
 	}
