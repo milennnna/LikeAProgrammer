@@ -25,7 +25,6 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void setVelocity(Vector2 velocity) {
-
 		rigidBody.velocity = velocity;
 	}
 }
