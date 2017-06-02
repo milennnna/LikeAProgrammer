@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
 
 	public EnemyType type;
-	private Rigidbody2D rigidBody;
+	protected Rigidbody2D rigidBody;
 
 	public float scaleOutFactor = 0.994f;
 	public float minimalRelativeScaleFactor = 0.5f;

@@ -14,4 +14,10 @@ class Battery : Enemy {
 	protected override bool rotateToVelocity () {
 		return false;
 	}
+
+	void Start() {
+		int direction = ((int)Random.Range (0, 2) == 1) ? 1 : -1;
+		float intensity = Random.Range (40, 60);
+		rigidBody.angularVelocity = direction * intensity;
+	}
 }
