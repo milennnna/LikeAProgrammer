@@ -55,7 +55,7 @@
      <Compile Include="Assets\scripts\Lajka.cs" />
      <Compile Include="Assets\scripts\Shield.cs" />
  <Reference Include="Facebook.Unity.Settings">
- <HintPath>/Users/mcakovic/LABPRAVAIGRICA/LikeAProgrammer/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
+ <HintPath>/Users/zeljkoilic/LikeAProgrammer/LikeAProgrammer/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
