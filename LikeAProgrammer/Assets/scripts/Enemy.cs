@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour {
 
 	public EnemyType type;
 	private Rigidbody2D rigidBody;
+	public bool spawned = false;
 
 	void Awake() {
 
