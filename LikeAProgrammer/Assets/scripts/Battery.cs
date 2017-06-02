@@ -10,4 +10,8 @@ class Battery : Enemy {
 
 		return ((int)Random.Range (0, 2) == 1);
 	}
+		
+	protected override bool rotateToVelocity () {
+		return false;
+	}
 }
