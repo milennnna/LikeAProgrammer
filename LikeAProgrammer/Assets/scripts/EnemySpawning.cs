@@ -36,6 +36,8 @@ public class EnemySpawning : MonoBehaviour {
 		{ EnemyType.Integer, 2 }
 	};
 
+	public int level = 1;
+
 	// references
 	public GameObject laikaReference;
 	public Enemy fullBatteryReference;
@@ -76,7 +78,7 @@ public class EnemySpawning : MonoBehaviour {
 	void scheduleSpawn() {
 
 		int scheduleTime = currentTime + Random.Range (1, maxScheduledInterval);
-		EnemyType type = (EnemyType)(Random.Range (0, (int)EnemyType.NumberOfTypes)); // TODO weighted probabilities
+		EnemyType type = (EnemyType)(Random.Range (0, level)); // TODO weighted probabilities
 		while (scheduledArrivalTimes.Contains(arrivalTime(speedMultipliers[type], scheduleTime))) {
 
 			scheduleTime++;
@@ -150,11 +152,14 @@ public class EnemySpawning : MonoBehaviour {
 		Vector2 startPoint = center + distance * new Vector2 (Mathf.Cos (angle), Mathf.Sin (angle));
 		Vector2 direction = center - startPoint;
 		direction.Normalize();
-		newEnemy.transform.position = startPoint;
 		Vector2 vel = direction * baseVelocity * speedMultipliers [spawn.type];
-		newEnemy.setVelocity(vel);
-		newEnemy.spawned = true;
+
 		// add to scene
+		newEnemy.transform.position = startPoint;
+		newEnemy.enabled = true;
+		newEnemy.spawned = true;
+		newEnemy.setVelocity(vel);
+		newEnemy.setCollidersEnabled (true);
 		newEnemy.gameObject.SetActive(true);
 	}
 }
