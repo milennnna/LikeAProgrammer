@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour
+{
 
 	public EnemyType type;
 	private Rigidbody2D rigidBody;
@@ -14,23 +15,34 @@ public class Enemy : MonoBehaviour {
 	public bool spawned = false;
 	private bool fadingOut = false;
 	private bool nearCollision = false;
-	private Vector2 initialScaleFactor = new Vector2(1.0f, 1.0f);
+	private Vector2 initialScaleFactor = new Vector2 (1.0f, 1.0f);
 	private Vector2 nearCollisionVelocity;
 
-	void Awake() {
+	protected virtual bool rotateToVelocity () {
+		return true;
+	}
+
+	protected virtual float rotationAngleCompensation() {
+		return 90.0f;
+	}
+
+	void Awake ()
+	{
 
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
 		initialScaleFactor = gameObject.transform.localScale;
 	}
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 
 
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 
 		if (nearCollision) {
 
@@ -50,17 +62,26 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	public void setVelocity(Vector2 velocity) {
+	public void setVelocity (Vector2 velocity)
+	{
 		rigidBody.velocity = velocity;
+
+		if (rotateToVelocity ()) {
+			float angle = Mathf.Atan2 (velocity.y, velocity.x) * 180.0f / Mathf.PI;
+			float rotationAngle = angle + rotationAngleCompensation ();
+			transform.Rotate (0.0f, 0.0f, rotationAngle);
+		}
 	}
 
-	public void OnTriggerEnter2D (Collider2D otherCollider) {
+	public void OnTriggerEnter2D (Collider2D otherCollider)
+	{
 
 		nearCollision = true;
 		nearCollisionVelocity = rigidBody.velocity;
 	}
 
-	public void setCollidersEnabled(bool collidersEnabled) {
+	public void setCollidersEnabled (bool collidersEnabled)
+	{
 
 		foreach (Collider2D collider in gameObject.GetComponents<Collider2D>()) {
 

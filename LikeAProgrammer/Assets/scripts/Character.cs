@@ -10,4 +10,8 @@ public class Character : Enemy {
 
 		return value;
 	}
+
+	protected override float rotationAngleCompensation() {
+		return 180.0f - 17.0f;
+	}
 }
