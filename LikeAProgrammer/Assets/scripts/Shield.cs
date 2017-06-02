@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour {
 
-	public float speed = 4;
+	public float speed = 5.0f;
 	public Rigidbody2D rigidBody;
 
 	// Use this for initialization
@@ -16,11 +16,11 @@ public class Shield : MonoBehaviour {
 	void Update () {
 		
 		if (Input.GetKey(KeyCode.LeftArrow)) {
-			transform.Rotate(0.0f, 0.0f, -10.0f);
+			transform.Rotate(0.0f, 0.0f, -speed);
 		}
 
 		if (Input.GetKey(KeyCode.RightArrow)) {
-			transform.Rotate(0.0f, 0.0f, 10.0f);
+			transform.Rotate(0.0f, 0.0f, 45*Time.deltaTime*speed);
 		}
 	}
 
