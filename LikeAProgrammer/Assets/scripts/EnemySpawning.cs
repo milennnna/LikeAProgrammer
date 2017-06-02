@@ -33,7 +33,7 @@ public class EnemySpawning : MonoBehaviour {
 
 		{ EnemyType.Battery, 1 },
 		{ EnemyType.Character, 2 },
-		{ EnemyType.Integer, 3 }
+		{ EnemyType.Integer, 2 }
 	};
 
 	// references
